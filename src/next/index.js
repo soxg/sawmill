@@ -65,7 +65,7 @@ function sawmillNext(handler, config = {}) {
     sawmill[handler.name] = new Handler();
   }
 
-    const { precision = 'milliseconds', method = 'console' } = config;
+    const { precision = 'milliseconds', method = 'console', path = '' } = config;
 
     return async function (req, res) {
       const startTime = Date.now();
@@ -94,15 +94,14 @@ function sawmillNext(handler, config = {}) {
         case 'log':
             console.log('Log Method Case')
             logEntry = {handler: handler.name, duration, precision, timestamp: new Date().toString()}
-            logData(handler.name, logEntry);
+            logData(handler.name, logEntry, path);
             break;
         case 'both':
             console.log('Both Cases')
             logEntry = {handler: handler.name, duration, precision, timestamp: new Date().toString()}
-            logData(handler.name, logEntry);
+            logData(handler.name, logEntry, path);
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
             break;
-
       }
   
       return `Sawmill: ${handler.name}'s request processed in ${duration} ${precision}`

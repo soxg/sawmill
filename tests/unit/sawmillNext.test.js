@@ -1,14 +1,17 @@
-import handler  from '../testfunctions/next/handler'
+import nextHandler  from '../testfunctions/next/next-function'
 import { sawmill } from '../../src/next/index'
 
-test('sawmill-next', async () => {
-
-    const data = await handler();
+test('Sawmill-Next\'s Basic Functionality', async () => {
+    const data = await nextHandler();
     expect(data).toBeDefined();
     expect(data).toMatch('Sawmill');
 
-    const length = sawmill.handler.length();
-
+    const length = sawmill.nextHandler.length();
     expect(length).toEqual(1);
 
+})
+
+
+test('Sawmill-Next\'s Log Functionality', async () => {
+    
 })

@@ -1,20 +1,31 @@
 const fs = require('fs')
+const pathModule = require('path')
 
-function logData(functionName, logEntry) {
-    const logFileName = `${functionName}-log.json`
-    
-    const existingFile = fs.existsSync(logFileName)
+function logData(functionName, logEntry, path = '') {
+    path = path || 'sawmill-logs';
+    const logFilePath = pathModule.join(path, `${functionName}-log.json`);
 
-    if (!existingFile) {
-        fs.writeFileSync(logFileName, '');
+    if (!fs.existsSync(path)) {
+        try {
+            fs.mkdirSync(path);
+        } catch(e) {
+            console.error('Sawmill: Issue creating path from config object. Error: ',e)
+        }
     }
 
-    fs.appendFile(logFileName, JSON.stringify(logEntry) + '\n', 'utf8', (error) => {
+    let logArray = [];
+    if (fs.existsSync(logFilePath)) {
+        const existingData = fs.readFileSync(logFilePath, 'utf8');
+        logArray = existingData ? JSON.parse(existingData) : [];
+    }
+    
+    logArray.push(logEntry);
+
+    fs.writeFileSync(logFilePath, JSON.stringify(logArray, null, 2), 'utf8', (error) => {
         if (error) {
-            console.error(`Sawmill: Error writing to log file for ${functionName} at ${logFileName}:`, error);
+            console.error(`Sawmill: Error writing to log file for ${functionName} at ${logFilePath}:`, error);
         }
     });
-    
 }
 
 module.exports = logData;
