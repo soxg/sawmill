@@ -6,9 +6,13 @@ test('Sawmill-Next\'s Basic Functionality', async () => {
     expect(data).toBeDefined();
     expect(data).toMatch('Sawmill');
 
-    const length = sawmill.nextHandler.length();
-    expect(length).toEqual(1);
+    // for (let i = 0; i < 10; i++) {
+    //     await nextHandler();
+    // }
 
+    const average = sawmill.nextHandler.average();
+    console.log('Sawmill nextHandler Average:', average, 'in a data set of', sawmill.nextHandler.length())
+    expect(average).toBeLessThanOrEqual(19);
 })
 
 

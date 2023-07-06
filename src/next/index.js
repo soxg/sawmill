@@ -13,7 +13,7 @@ class Handler {
 
   average() {
     const sum = this.durations.reduce((a, b) => a + b, 0);
-    return this.durations.length ? (sum / this.durations.length).toFixed(0) : 0;
+    return this.durations.length ? Number((sum / this.durations.length).toFixed(0)) : 0;
   }
 
   median() {
@@ -65,7 +65,7 @@ function sawmillNext(handler, config = {}) {
     sawmill[handler.name] = new Handler();
   }
 
-    const { precision = 'milliseconds', method = 'console', path = '' } = config;
+    const { precision = 'milliseconds', method = 'console', path = '', version = 'v1' } = config;
 
     return async function (req, res) {
       const startTime = Date.now();
@@ -93,12 +93,12 @@ function sawmillNext(handler, config = {}) {
             break;
         case 'log':
             console.log('Log Method Case')
-            logEntry = {handler: handler.name, duration, precision, timestamp: new Date().toString()}
+            logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             break;
         case 'both':
             console.log('Both Cases')
-            logEntry = {handler: handler.name, duration, precision, timestamp: new Date().toString()}
+            logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
             break;
