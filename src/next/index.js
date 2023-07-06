@@ -1,5 +1,7 @@
 const logData = require("../dataLogger");
 
+let sawmill = {}
+
 class Handler {
   constructor() {
     this.durations = [];
@@ -48,12 +50,15 @@ class Handler {
     const stdDevValue = this.stdDev();
     return (stdDevValue * stdDevValue)
   }
+
+  length() {
+    return this.durations.length
+  }
   
   clear() {
     this.durations = [];
   }
 }
-
 
 function sawmillNext(handler, config = {}) {
   if (!sawmill[handler.name]) {
@@ -100,7 +105,7 @@ function sawmillNext(handler, config = {}) {
 
       }
   
-      console.log(`Sawmill: ${handler.name}'s request processed in ${duration} ${precision}`);
+      return `Sawmill: ${handler.name}'s request processed in ${duration} ${precision}`
     };
   }
   
