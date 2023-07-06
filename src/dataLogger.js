@@ -1,7 +1,7 @@
 const fs = require('fs')
 const pathModule = require('path')
 
-function logData(functionName, logEntry, path = '') {
+function logData(functionName, logEntry, path) {
     path = path || 'sawmill-logs';
     const logFilePath = pathModule.join(path, `${functionName}-log.json`);
 
