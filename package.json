@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/soxg/sawmill/issues"
   },
-  "homepage": "https://github.com/soxg/sawmill#readme"
+  "homepage": "https://github.com/soxg/sawmill#readme",
+  "devDependencies": {
+    "jest": "^29.6.0"
+  }
 }
