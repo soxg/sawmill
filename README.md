@@ -1,11 +1,18 @@
 ### Sawmill - Open-source Node.js/Express & Next.js performance logging and analysis
 
 ### **Table of Contents**
+
+
 [Description]()
+
 [Key Features]()
+
 [Getting Started]()
+
 [Configuration Options]()
+
 [How to Contribute]()
+
 [Contributors]()
 
 ### **Description**:

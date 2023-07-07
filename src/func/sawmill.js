@@ -1,6 +1,6 @@
 const logData = require("../dataLogger");
 
-let sawmill = {}
+sawmill.stats = {}
 
 class Handler {
   constructor() {
@@ -60,9 +60,9 @@ class Handler {
   }
 }
 
-function sawmillNext(handler, config = {}) {
-  if (!sawmill[handler.name]) {
-    sawmill[handler.name] = new Handler();
+function sawmill(handler, config = {}) {
+  if (!sawmill.stats[handler.name]) {
+    sawmill.stats[handler.name] = new Handler();
   }
 
     const { precision = 'milliseconds', method = 'console', path = '', version = 'v1' } = config;
@@ -88,15 +88,15 @@ function sawmillNext(handler, config = {}) {
 
       let logEntry;
       switch(method){
-        case 'console':
+        case 'consoleLog':
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
             break;
-        case 'log':
+        case 'fileLog':
             console.log('Log Method Case')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             break;
-        case 'both':
+        case 'bothLogs':
             console.log('Both Cases')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
@@ -107,9 +107,6 @@ function sawmillNext(handler, config = {}) {
       return `Sawmill: ${handler.name}'s request processed in ${duration} ${precision}`
     };
   }
-  
-  module.exports = {
-    sawmillNext,
-    sawmill
-  }
+
+  module.exports = sawmill
   
