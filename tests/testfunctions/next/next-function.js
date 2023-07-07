@@ -12,4 +12,4 @@ try {
     console.log(error)
 }
 }  
-export default sawmillNext(nextHandler, {precision: 'milliseconds', method: 'both'});
+export default sawmillNext(nextHandler, {precision: 'milliseconds', method: 'both', version: 'v1'});
