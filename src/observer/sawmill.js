@@ -8,11 +8,12 @@ function sawmillServerWrapper() {
 
 function intercept(module) {
   let original = module.request;
-  let endTime;
+  
 
   function sawmillWrapper(outgoing) {
     let req = original.apply(this, arguments);
     const startTime = Date.now();
+    let endTime;
     console.log('startTime', startTime)
     let emit = req.emit;
     let body = "";
