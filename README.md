@@ -19,6 +19,8 @@
 
 Sawmill is a lightweight yet customizable package created to provide developers real-time tracking and logging of server handler performance and analytical metrics. The package aims to empower test-driven development and testing libraries through easy-to-access response metrics in Node.js/Express & Next.js environments.
 
+Notably, as a development tool, it is not advised that Sawmill be used in production. A production tool may be available at a future date.
+
 ### **Key Features**:
 Real-time performance tracking: Sawmill tracks and logs server handler performance in real-time, providing developers with immediate insights into their application's response metrics.
 
