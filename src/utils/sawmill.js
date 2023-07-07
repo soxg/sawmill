@@ -65,7 +65,7 @@ function sawmill(handler, config = {}) {
     sawmill.stats[handler.name] = new Handler();
   }
 
-    const { precision = 'milliseconds', method = 'console', path = '', version = 'v1' } = config;
+    const { precision = 'milliseconds', method = 'consoleLog', path = '', version = 'v1' } = config;
 
     return async function (req, res) {
       const startTime = Date.now();
@@ -84,7 +84,7 @@ function sawmill(handler, config = {}) {
           break;
       }
 
-      sawmill[handler.name].addDuration(parseFloat(duration))
+      sawmill.stats[handler.name].addDuration(parseFloat(duration))
 
       let logEntry;
       switch(method){
@@ -103,8 +103,6 @@ function sawmill(handler, config = {}) {
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
             break;
       }
-  
-      return `Sawmill: ${handler.name}'s request processed in ${duration} ${precision}`
     };
   }
 
