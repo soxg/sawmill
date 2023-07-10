@@ -1,4 +1,5 @@
 const logData = require("../dataLogger");
+const { sawmillSitter } = require("../observer/sawmill");
 
 sawmill.stats = {}
 
@@ -13,7 +14,7 @@ class Handler {
 
   average() {
     const sum = this.durations.reduce((a, b) => a + b, 0);
-    return this.durations.length ? Number((sum / this.durations.length).toFixed(0)) : 0;
+    return this.durations.length ? Number((sum / this.durations.length).toFixed(2)) : 0;
   }
 
   median() {
@@ -61,6 +62,10 @@ class Handler {
 }
 
 function sawmill(handler, config = {}) {
+  if(!handler) {
+    return sawmillSitter();
+  }
+
   if (!sawmill.stats[handler.name]) {
     sawmill.stats[handler.name] = new Handler();
   }
@@ -76,11 +81,11 @@ function sawmill(handler, config = {}) {
   
       switch(precision) {
         case 'seconds':
-          duration = ((endTime - startTime) / 1000).toFixed(2);
+          duration = ((endTime - startTime) / 1000).toFixed(3);
           break;
         case 'milliseconds':
         default:
-          duration = (endTime - startTime).toFixed(0);
+          duration = (endTime - startTime);
           break;
       }
 
@@ -101,6 +106,8 @@ function sawmill(handler, config = {}) {
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
+            console.log(`Sawmill length: ${sawmill.stats[handler.name].length()}`)
+            console.log(`Sawmill avg: ${sawmill.stats[handler.name].average()}`)
             break;
       }
     };

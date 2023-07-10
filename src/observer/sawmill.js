@@ -1,61 +1,15 @@
-const http = require('http');
-const https = require('https');
-
-function sawmillServerWrapper() {
-  intercept(http);
-  intercept(https);
-}
-
-function intercept(module) {
-  let original = module.request;
-  
-
-  function sawmillWrapper(outgoing) {
-    let req = original.apply(this, arguments);
-    const startTime = Date.now();
-    let endTime;
-    console.log('startTime', startTime)
-    let emit = req.emit;
-    let body = "";
-    
-    
-    req.emit = function (eventName, response) {
-    
-      switch (eventName) {
-        case "response": {
-          response.on("end", () => {
-            endTime = Date.now();
-            console.log('endTime', endTime)
-            let res = {
-              statusCode: response.statusCode,
-              headers: response.headers,
-              message: response.statusMessage,
-              body,
-            };
-            
-          });
-          break; 
-        }
-      }
-      console.log(`Sawmill: ${((endTime - startTime) / 1000).toFixed(2)} seconds`);
-      return emit.apply(this, arguments);
+const sawmillSitter = () => {
+    return function processRequest (req, res, next) {
+        const startTime = Date.now();
+        res.on('finish', function() {
+            const endTime = Date.now()
+            const duration = (endTime - startTime) / 1000;
+            console.log('Sawmill OBSERVER:', duration, 's');
+            // console.log('Route:', req.route ? req.route.path : 'Unknown route');
+        });
+        next();
     }
-    // sawmillWrapper(outgoing)
-    return req;
-  }
-
-  // function logParams(req) { // Remove this function if not used
-  //   let log = {
-  //     method: req.method || "GET",
-  //     host: req.host || req.hostname || "localhost",
-  //     port: req.port || "3000",
-  //     path: req.pathname || req.path || "/",
-  //     headers: req.headers || {}
-  //   }
-  //   console.log(log);
-  // }
-
-  module.request = sawmillWrapper;
 }
 
-module.exports = { sawmillServerWrapper };
+
+module.exports = { sawmillSitter };
