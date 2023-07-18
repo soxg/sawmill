@@ -110,7 +110,7 @@ function sawmill(handler, config = {}) {
             console.log(`Sawmill avg: ${sawmill.stats[handler.name].average()}`)
             break;
       }
-      next() // -> ensure that next works in the context of middlewar eand the handler's response is being passed on
+      next() // -> ensure that next works in the context of middleware and the handler's response is being passed on
     };
   }
 
