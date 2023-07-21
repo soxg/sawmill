@@ -12,9 +12,6 @@
 
 [Configuration Options]()
 
-[How to Contribute]()
-
-[Contributors]()
 
 ### **Description**:
 
@@ -38,4 +35,9 @@ Support for test-driven development: By providing key performance metrics, Sawmi
 Integration with Testing Libraries: Sawmill can be seamlessly incorporated into testing libraries, making it an invaluable tool for performance testing.
 
 External Logging: Beyond tracking, Sawmill also supports external logging. This feature allows for a comprehensive record of your server handler's performance, useful for analysis and debugging.
+
+### **Getting Started**:
+
+
+### **Configuration Options**:
 
