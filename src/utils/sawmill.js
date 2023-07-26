@@ -1,4 +1,5 @@
 const logData = require("../dataLogger");
+const accessData = require('../dataLogAccess')
 const { sawmillSitter } = require("../observer/sawmill");
 
 sawmill.stats = {}
@@ -8,7 +9,11 @@ class Handler {
     this.durations = [];
   }
 
-  addDuration(duration) {
+  average() {
+    accessData(this.functionName, 'average', this.precision, this.path);
+  }
+
+  addSessionDuration(duration) {
     this.durations.push(duration);
   }
 
@@ -69,8 +74,12 @@ function sawmill(handler, config = {}) {
   if (!sawmill.stats[handler.name]) {
     sawmill.stats[handler.name] = new Handler();
   }
-
+  
     const { precision = 'milliseconds', mode = 'consoleLog', path = '', version = 'v1', method = 'false', responseStatus = 'false' } = config;
+    
+    sawmill.stats[handler.name].path = path
+    sawmill.stats[handler.name].functionName = handler.name
+    sawmill.stats[handler.name].functionName = precision
 
     return async function (req, res) {
       const startTime = Date.now();
@@ -107,7 +116,7 @@ function sawmill(handler, config = {}) {
           break;
       }
 
-      sawmill.stats[handler.name].addDuration(parseFloat(duration))
+      sawmill.stats[handler.name].addSessionDuration(parseFloat(duration))
 
       let logEntry;
       switch(mode){
@@ -117,18 +126,21 @@ function sawmill(handler, config = {}) {
         case 'fileLog':
             console.log('File Log Mode')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
-            logData(handler.name, logEntry, path);
+            logData(handler.name, logEntry, precision, path);
             break;
         case 'bothLogs':
             console.log('Both Console and Log Mode')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
-            logData(handler.name, logEntry, path);
+            logData(handler.name, logEntry, precision, path);
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
-            console.log(`Sawmill length: ${sawmill.stats[handler.name].length()}`)
-            console.log(`Sawmill avg: ${sawmill.stats[handler.name].average()}`)
+            console.log(`Sawmill length: ${sawmill.stats[handler.name].sessionLength()}`)
+            console.log(`Sawmill avg: ${sawmill.stats[handler.name].sessionAverage()}`)
+            console.log(`Sawmill log avg: ${sawmill.stats[handler.name].average()} `)
             break;
       }
-      next() // -> ensure that next works in the context of middleware and the handler's response is being passed on
+      if (typeof next !== 'undefined') {
+        next()
+      }
     };
   }
 

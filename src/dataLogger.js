@@ -1,9 +1,17 @@
 const fs = require('fs')
 const pathModule = require('path')
 
-function logData(functionName, logEntry, path) {
+function logData(functionName, logEntry, precision, path) {
     path = path || 'sawmill-logs';
-    const logFilePath = pathModule.join(path, `${functionName}-log.json`);
+    let dur;
+    if (precision === 'milliseconds') {
+        dur = 'ms'
+    } else if (precision === 'seconds') {
+        precision = 's'
+    } else {
+        precision = 'ms'
+    }
+    const logFilePath = pathModule.join(path, `${functionName}-log-${dur}.json`);
 
     if (!fs.existsSync(path)) {
         try {
