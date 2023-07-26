@@ -70,13 +70,31 @@ function sawmill(handler, config = {}) {
     sawmill.stats[handler.name] = new Handler();
   }
 
-    const { precision = 'milliseconds', method = 'consoleLog', path = '', version = 'v1' } = config;
+    const { precision = 'milliseconds', mode = 'consoleLog', path = '', version = 'v1', method = 'false', responseStatus = 'false' } = config;
 
     return async function (req, res) {
       const startTime = Date.now();
       await handler(req, res);
       const endTime = Date.now();
       let duration;
+
+      switch(method) {
+        case 'true':
+          break;
+        case 'false':
+          break;
+        case null:
+          break;
+      }
+
+      switch(responseStatus) {
+        case 'true':
+          break;
+        case 'false':
+          break;
+        case null:
+          break;
+      }
 
   
       switch(precision) {
@@ -92,17 +110,17 @@ function sawmill(handler, config = {}) {
       sawmill.stats[handler.name].addDuration(parseFloat(duration))
 
       let logEntry;
-      switch(method){
+      switch(mode){
         case 'consoleLog':
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)
             break;
         case 'fileLog':
-            console.log('Log Method Case')
+            console.log('File Log Mode')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             break;
         case 'bothLogs':
-            console.log('Both Cases')
+            console.log('Both Console and Log Mode')
             logEntry = {handler: handler.name, duration, precision, version, timestamp: new Date().toString()}
             logData(handler.name, logEntry, path);
             console.log(`Sawmill: ${handler.name}'s request was processed in ${duration} ${precision}`)

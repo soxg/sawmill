@@ -39,5 +39,22 @@ External Logging: Beyond tracking, Sawmill also supports external logging. This 
 ### **Getting Started**:
 
 
-### **Configuration Options**:
+### **Middleware Configuration Options**:
 
+    **Precision**:
+    Choose between 'seconds' and 'milliseconds.' Defaults to 'milliseconds.'
+
+    **Mode**:
+    Choose between console.log only, file logs only, or both.
+
+    **Response Status**:
+    Indicate whether you would like the response status logged, in either mode, if applicable——'true' or 'false'.
+
+    **Path**:
+    Create a custom path for your file logs.
+
+    **Version**:
+    Indicate the version of your middleware to compare data between interations. Defaults to 'v1'.
+
+    **Method**:
+    Indicate whether you would like the method logged, in either mode, if applicable——'true' or 'false'.
