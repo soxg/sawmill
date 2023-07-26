@@ -12,7 +12,33 @@ class Handler {
   average() {
     return accessData(this.functionName, 'average', this.precision, this.path);
   }
-
+  median() {
+    return accessData(this.functionName, 'median', this.precision, this.path);
+  }
+  min() {
+    return accessData(this.functionName, 'min', this.precision, this.path);
+  }
+  max(){
+    return accessData(this.functionName, 'max', this.precision, this.path);
+  }
+  sum(){
+    return accessData(this.functionName, 'sum', this.precision, this.path);
+  }
+  count() {
+    return accessData(this.functionName, 'count', this.precision, this.path);
+  }
+  stdDev() {
+    return accessData(this.functionName, 'stdDev', this.precision, this.path);
+  }
+  variance() {
+    return accessData(this.functionName, 'variance', this.precision, this.path);
+  }
+  length(){
+    return accessData(this.functionName, 'length', this.precision, this.path);
+  }
+  clear(){
+    return accessData(this.functionName, 'clear', this.precision, this.path);
+  }
   addSessionDuration(duration) {
     this.durations.push(duration);
   }

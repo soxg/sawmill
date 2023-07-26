@@ -40,9 +40,6 @@ function accessData(functionName, dataMethod, precision, path) {
     console.log(sumDurationData, 'AH')
     switch(dataMethod){
         case "average":
-            console.log(logArray, logFilePath)
-            console.log('SUM',sumDurationData);
-            console.log(rawDurationData.length);
             return rawDurationData.length ? sumDurationData / rawDurationData.length : 0
         case 'median':
             break;
