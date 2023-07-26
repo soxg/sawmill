@@ -10,7 +10,7 @@ class Handler {
   }
 
   average() {
-    accessData(this.functionName, 'average', this.precision, this.path);
+    return accessData(this.functionName, 'average', this.precision, this.path);
   }
 
   addSessionDuration(duration) {
@@ -79,7 +79,7 @@ function sawmill(handler, config = {}) {
     
     sawmill.stats[handler.name].path = path
     sawmill.stats[handler.name].functionName = handler.name
-    sawmill.stats[handler.name].functionName = precision
+    sawmill.stats[handler.name].precision = precision
 
     return async function (req, res) {
       const startTime = Date.now();

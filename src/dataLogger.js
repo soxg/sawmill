@@ -7,9 +7,9 @@ function logData(functionName, logEntry, precision, path) {
     if (precision === 'milliseconds') {
         dur = 'ms'
     } else if (precision === 'seconds') {
-        precision = 's'
+        dur = 's'
     } else {
-        precision = 'ms'
+        dur = 'ms'
     }
     const logFilePath = pathModule.join(path, `${functionName}-log-${dur}.json`);
 

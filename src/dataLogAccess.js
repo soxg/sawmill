@@ -11,6 +11,7 @@ function accessData(functionName, dataMethod, precision, path) {
     } else {
         dur = 'ms'
     }
+    console.log('FUNCTIONNAME', functionName)
     const logFilePath = pathModule.join(path, `${functionName}-log-${dur}.json`)
     
     if (!fs.existsSync(logFilePath)) {
@@ -18,25 +19,31 @@ function accessData(functionName, dataMethod, precision, path) {
     }
 
     let logArray = []
+    let rawDurationData = []
+    let sumDurationData = 0;
 
     if (fs.existsSync(logFilePath)) {
         const data = fs.readFileSync(logFilePath, 'utf-8');
         logArray = data ? JSON.parse(data) : [];
 
         if (dur === 'ms') {
-
+            for (let i = 0; i < logArray.length; i++) {
+                rawDurationData.push(logArray[i].duration)
+                console.log(logArray[i].duration)
+                sumDurationData += logArray[i].duration
+            }
         } else {
-            
+
         }
     }
     let result;
-    console.log('DM', dataMethod)
+    console.log(sumDurationData, 'AH')
     switch(dataMethod){
         case "average":
             console.log(logArray, logFilePath)
-            let sum = logArray.reduce((a, b)=> a + b.duration, 0)
-            console.log('SUM', sum);
-            result = logArray.length ? Number((sum / logArray.length).toFixed(2)): 0
+            console.log('SUM',sumDurationData);
+            console.log(rawDurationData.length);
+            return rawDurationData.length ? sumDurationData / rawDurationData.length : 0
         case 'median':
             break;
         case 'min':
