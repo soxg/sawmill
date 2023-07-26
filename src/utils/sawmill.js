@@ -12,51 +12,51 @@ class Handler {
     this.durations.push(duration);
   }
 
-  average() {
+  sessionAverage() {
     const sum = this.durations.reduce((a, b) => a + b, 0);
     return this.durations.length ? Number((sum / this.durations.length).toFixed(2)) : 0;
   }
 
-  median() {
+  sessionMedian() {
     if (!this.durations.length) return 0;
     const sorted = [...this.durations].sort((a, b) => a - b);
     const mid = Math.floor(sorted.length / 2);
     return sorted.length % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
   }
 
-  min() {
+  sessionMin() {
     return Math.min(...this.durations);
   }
 
-  max() {
+  sessionMax() {
     return Math.max(...this.durations);
   }
 
-  sum() {
+  sessionSum() {
     return this.durations.reduce((a, b) => a + b, 0);
   }
 
-  count() {
+  sessionCount() {
     return this.durations.length;
   }
 
-  stdDev() {
+  sessionStdDev() {
     const avg = this.average();
     const squareDiffs = this.durations.map(value => (value - avg) ** 2);
     const avgSquareDiff = squareDiffs.reduce((a, b) => a + b, 0) / squareDiffs.length;
     return Math.sqrt(avgSquareDiff)
   }
 
-  variance() {
+  sessionVariance() {
     const stdDevValue = this.stdDev();
     return (stdDevValue * stdDevValue)
   }
 
-  length() {
+  sessionLength() {
     return this.durations.length
   }
   
-  clear() {
+  sessionClear() {
     this.durations = [];
   }
 }
